@@ -171,6 +171,7 @@ public class Simulador extends JApplet {
         String cadena;
         int count=0;
         int controlIni=1,numData=1,controlFin=1;
+      
         FileReader f = new FileReader(archivo);
         BufferedReader b = new BufferedReader(f);
         String params=(String) cb_calle.getSelectedItem();			
@@ -178,7 +179,8 @@ public class Simulador extends JApplet {
         	coordenadaVehiculo = cadena.split(";");
         	numData=Integer.parseInt(coordenadaVehiculo[1]);
         	controlIni = Integer.parseInt(muestraNumControlCalles(pathArchivoCalles));
-        	if(numData >= controlFin && numData <= controlIni){
+        	controlFin = Integer.parseInt(muestraNumControlCallesFin(pathArchivoCalles));
+        	if(controlIni >=numData  && controlFin <=  numData){
         	coordenadasVehiculo[count] = coordenadaVehiculo[0];
         	count=count+1;
         	}
@@ -237,10 +239,32 @@ public class Simulador extends JApplet {
 	        
 	        	if(CallesControl[0].equals(cb_calle.getSelectedItem())){
 	        		params=CallesControl[1];
+	        		count=count+1;
 	        	}
 	        	
-	            count=count+1;
 	        }
+	       
+	        b.close();
+	        return params;
+	    }
+	 
+	 public static String muestraNumControlCallesFin(String archivo) throws FileNotFoundException, IOException {
+	        String cadena;
+	        int count=0;
+	        String[] CallesControl=new String[9];
+	        FileReader f = new FileReader(archivo);
+	        BufferedReader b = new BufferedReader(f);
+	        String params="";
+	        while((cadena = b.readLine())!=null) {
+	        	CallesControl = cadena.split(";");
+	        
+	        	if(CallesControl[0].equals(cb_calleFin.getSelectedItem())){
+	        		params=CallesControl[1];
+	        		count=count+1;
+	        	}
+	        	
+	        }
+	       
 	        b.close();
 	        return params;
 	    }
